@@ -1,5 +1,4 @@
 (import email)
-(import pudb)
 (import [imapclient [IMAPClient]])
 (import [processor.storage [get-storage]])
 
@@ -47,7 +46,7 @@
    "html-body" (email-body msg "text/html")})
 
 
-(defn imap_source [server username password folder &optional [limit 10]]
+(defn imap [server username password folder &optional [limit 10]]
   (setv server (apply IMAPClient [server] {"use_uid" True
                                                      "ssl" True}))
   (setv [get-value set-value] (get-storage "imap-source"))

@@ -58,3 +58,5 @@ docs/_build
 mail2rss.py
 /rss-feed.xml
 /processor.db
+do-processing.py
+processor.db.back

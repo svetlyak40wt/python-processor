@@ -1,3 +1,6 @@
+(import pudb)
+(import [collections.abc [Iterable]])
+
 (defn extract_messages [sources]
     """Returns messages, taking
     them one by one from each source.
@@ -26,8 +29,19 @@
         (setv idx 0))))
 
 
+(defn run-action [actions msg]
+  (if-not (isinstance actions Iterable)
+    (setv actions [actions]))
+  
+  (for [action actions]
+    (setv msg (action msg))
+    (if-not msg
+            (break)))
+  msg)
+
+
 (defn run_pipeline [sources rules]
     (for [msg (extract_messages sources)]
         (for [(, trigger action) rules]
             (if (trigger msg)
-              (action msg)))))
+              (run-action action msg)))))
