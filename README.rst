@@ -5,7 +5,7 @@ processor
 How to install lxml on OSX
 --------------------------
 
-STATIC_DEPS=true pip3 install feedparser
+STATIC_DEPS=true pip3 install feedparser feedgen
 
 | |docs| |travis| |appveyor| |coveralls| |landscape| |scrutinizer|
 | |version| |downloads| |wheel| |supported-versions| |supported-implementations|

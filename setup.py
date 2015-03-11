@@ -22,7 +22,12 @@ setup(
     version="0.1.0",
     license="BSD",
     description="A microframework to build source -> filter -> action workflows.",
-    long_description="%s\n%s" % (read("README.rst"), re.sub(":obj:`~?(.*?)`", r"``\1``", read("CHANGELOG.rst"))),
+    long_description="%s\n%s" % (
+        read("README.rst"),
+        re.sub(
+            ":obj:`~?(.*?)`",
+            r"``\1``",
+            read("CHANGELOG.rst"))),
     author="Alexander Artemenko",
     author_email="svetlyak.40wt@gmail.com",
     url="https://github.com/svetlyak40wt/python-processor",
@@ -53,6 +58,9 @@ setup(
         'hy',
         'feedparser',
         'python-dateutil',
+        'IMAPClient',
+        'feedgen',
+        'twiggy-goodies',
     ],
     extras_require={
         # eg: "rst": ["docutils>=0.11"],

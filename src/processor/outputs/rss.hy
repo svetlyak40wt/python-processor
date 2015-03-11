@@ -1,3 +1,4 @@
+(import codecs)
 (import [hashlib [md5]])
 (import [processor.storage [get-storage]])
 (import [feedgen.feed [FeedGenerator]])
@@ -44,5 +45,5 @@
     
     (set-value filename data)
     
-    (with [[f (open filename "w")]]
+    (with [[f (codecs.open filename "w" "utf-8")]]
           (.write f (create-feed data)))))
