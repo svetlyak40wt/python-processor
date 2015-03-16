@@ -1,7 +1,9 @@
 (import email)
+(require processor.utils.macro)
 
 (import [imapclient [IMAPClient]])
 (import [processor.storage [get-storage]])
+;(import [processor.utils.macro [hello2]])
 (import [twiggy_goodies.threading [log]])
 
 
@@ -48,35 +50,36 @@
    "html-body" (email-body msg "text/html")})
 
 
-(defn imap [server username password folder &optional [limit 10]]
-  (setv server (apply IMAPClient [server] {"use_uid" True
+(defn imap [hostname username password folder &optional [limit 10]]
+  (setv server (apply IMAPClient [hostname] {"use_uid" True
                                                      "ssl" True}))
   (setv [get-value set-value] (get-storage "imap-source"))
   (setv seen-position-key (.join ":" [server.host folder "position"]))
   (setv seen-position (get-value seen-position-key -1))
 
-  (log.info "Seen position: %s" seen-position)
-  
-  (.login server username password)
-  (.select_folder server folder)
-  
-  (setv message-ids (.search server ["NOT DELETED"]))
-
-  (log.info "All message ids: %s" message-ids)
+  (with-log-fields {"seen_position" seen-position
+                    "server" hostname
+                    "username" username                
+                    "folder" folder}
+    (log.info "Checking IMAP folder")
     
-  ; skip all message ids which are already seen
-  (setv message-ids (list-comp id [id message-ids] (> id seen-position)))
-  (setv message-ids (slice message-ids (- limit)))
-  (setv messages (.fetch server
-                         message-ids ["RFC822"]))
-  (setv messages (list-comp (get item (.encode "RFC822" "utf-8"))
-                            [item (.values messages)]))
-  (setv messages (map decode-message messages))
-  (setv results (list messages))
-  (if message-ids
-    (do
-     (with [[(apply log.fields [] {"message_ids" message-ids})]]
-           (log.info "We processed some message ids"))
-     (set-value seen-position-key (max message-ids))))
+    (.login server username password)
+    (.select_folder server folder)
+    
+    (setv message-ids (.search server ["NOT DELETED"]))
+
+                                ; skip all message ids which are already seen
+    (setv message-ids (list-comp id [id message-ids] (> id seen-position)))
+    (setv message-ids (slice message-ids (- limit)))
+    (setv messages (.fetch server
+                           message-ids ["RFC822"]))
+    (setv messages (list-comp (get item (.encode "RFC822" "utf-8"))
+                              [item (.values messages)]))
+    (setv messages (map decode-message messages))
+    (setv results (list messages))
+    (if message-ids
+      (with-log-fields {"message_ids" message-ids}
+        (log.info "We processed some message ids")
+        (set-value seen-position-key (max message-ids)))))
   results
 )
