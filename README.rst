@@ -76,3 +76,13 @@ Development
 To run the all tests run::
 
     tox
+
+
+Twitter source
+==============
+
+* Go to https://apps.twitter.com
+* Create new app.
+* Go to "Keys and Access Tokens" tabs.
+* Copy "Consumer Key", "Consumer Secret".
+* Create "Access Token" and "Access Secret" and copy them too.

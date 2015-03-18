@@ -54,9 +54,8 @@ docs/_build
 *.bak
 .noseids
 /env
-/env3
 mail2rss.py
 /rss-feed.xml
-/processor.db
-do-processing.py
-processor.db.back
+/*.db
+do-*.py
+/*.log

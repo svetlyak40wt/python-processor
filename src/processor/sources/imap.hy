@@ -3,8 +3,6 @@
 
 (import [imapclient [IMAPClient]])
 (import [processor.storage [get-storage]])
-;(import [processor.utils.macro [hello2]])
-(import [twiggy_goodies.threading [log]])
 
 
 (defn decode-header [text]

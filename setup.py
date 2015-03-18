@@ -52,7 +52,7 @@ setup(
         "Topic :: Utilities",
     ],
     keywords=[
-        'processing', 'devops', 'imap', 'rss'
+        'processing', 'devops', 'imap', 'rss', 'twitter'
     ],
     install_requires=[
         'hy',
@@ -61,10 +61,8 @@ setup(
         'IMAPClient',
         'feedgen',
         'twiggy-goodies',
+        'requests-oauthlib',
     ],
-    extras_require={
-        # eg: "rst": ["docutils>=0.11"],
-    },
     entry_points={
         "console_scripts": [
             "processor = processor.__main__:main"

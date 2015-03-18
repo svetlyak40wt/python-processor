@@ -7,7 +7,10 @@
 (setv not-given (object))
 
 
-(defn get-storage [plugin-name &optional [db-filename "processor.db"]]
+(defn get-storage [plugin-name &optional [db-filename (.get
+                                                       os.environ
+                                                       "PROCESSOR_DB"
+                                                       "processor.db")]]
   (defn get-plugin-data []
     (setv data (if (os.path.exists db-filename)
                  (with [[f (open db-filename "r")]]
