@@ -1,2 +1,4 @@
 pudb
 html2text
+invoke
+wheel
