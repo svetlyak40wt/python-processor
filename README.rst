@@ -99,7 +99,7 @@ Usually it is looks like that:
 
 
 Running this code, will fetch new results for search by query ``My Company``
-and output them on the screen. Of cause, you could use any other ``output``,
+and output them on the screen. Of course, you could use any other ``output``,
 supported by the ``processor``. Browse online documentation to find out
 which sources and outputs are supported and for to configure them.
     
