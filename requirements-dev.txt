@@ -2,3 +2,5 @@ pudb
 html2text
 invoke
 wheel
+# to run tests
+detox
