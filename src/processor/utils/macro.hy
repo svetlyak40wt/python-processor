@@ -14,5 +14,3 @@
 
 (defmacro with-log-name [name &rest body]
   `(with-log-name-and-fields ~name {} ~@body))
-
-
