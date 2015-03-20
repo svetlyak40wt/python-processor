@@ -2,7 +2,6 @@
 (require hy.contrib.anaphoric)
 
 (import urllib)
-(import pudb)
 
 (import [itertools [takewhile]])
 (import [requests_oauthlib [OAuth1Session]])
