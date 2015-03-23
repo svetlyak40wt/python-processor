@@ -11,11 +11,14 @@ env:
     - TOXENV=3.4,coveralls
     - TOXENV=3.4-nocover
 before_install:
+  - sudo pip install codecov
   - python --version
   - virtualenv --version
   - pip --version
   - uname -a
   - lsb_release -a
+after_success:
+  - codecov
 install:
   - pip install tox
 script:
