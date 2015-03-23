@@ -12,6 +12,9 @@ Badges
     :target: https://readthedocs.org/projects/python-processor
     :alt: Documentation Status
 
+.. image:: http://allmychanges.com/p/python/processor/badge/
+   :target: http://allmychanges.com/p/python/processor/?utm_source=badge
+
 .. |travis| image:: http://img.shields.io/travis/svetlyak40wt/python-processor/master.png?style=flat
     :alt: Travis-CI Build Status
     :target: https://travis-ci.org/svetlyak40wt/python-processor
