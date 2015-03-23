@@ -5,15 +5,16 @@ python-processor
 Badges
 ======
 
-| |docs| |travis| |appveyor| |coveralls| |landscape| |scrutinizer|
+| |docs| |changelog| |travis| |appveyor| |coveralls| |landscape| |scrutinizer|
 | |version| |downloads| |wheel| |supported-versions| |supported-implementations|
 
 .. |docs| image:: https://readthedocs.org/projects/python-processor/badge/?style=flat
     :target: https://readthedocs.org/projects/python-processor
     :alt: Documentation Status
 
-.. image:: http://allmychanges.com/p/python/processor/badge/
-   :target: http://allmychanges.com/p/python/processor/?utm_source=badge
+.. |changelog| image:: http://allmychanges.com/p/python/processor/badge/
+    :target: http://allmychanges.com/p/python/processor/?utm_source=badge
+    :alt: Release Notes
 
 .. |travis| image:: http://img.shields.io/travis/svetlyak40wt/python-processor/master.png?style=flat
     :alt: Travis-CI Build Status
