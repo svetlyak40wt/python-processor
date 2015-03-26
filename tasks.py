@@ -6,7 +6,14 @@ def upload():
     run('python setup.py sdist upload')
     run('python setup.py bdist_wheel upload')
 
+
 @task
 def serve_docs():
-    run('sphinx-build -b html docs dist/docs')
-    run('cd dist/docs && python -mhttp.server --bind localhost')
+    from livereload import Server, shell
+
+    build_command = 'sphinx-build -b html docs dist/docs'
+    run(build_command)
+
+    server = Server()
+    server.watch('docs/', shell(build_command))
+    server.serve(root='dist/docs')

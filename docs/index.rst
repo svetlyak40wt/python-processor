@@ -1,23 +1,19 @@
 Welcome to processor's documentation!
 ======================================
 
-Contents:
+.. include:: overview.rst
+             
+
+Table of Content
+================
 
 .. toctree::
    :maxdepth: 2
 
-   readme
-   installation
-   usage
-   reference/index
+   sources
+   outputs
    contributing
    authors
    changelog
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
