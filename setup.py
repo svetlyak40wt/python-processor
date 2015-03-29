@@ -10,6 +10,7 @@ from os.path import splitext
 from setuptools import find_packages
 from setuptools import setup
 
+
 def read(*names, **kwargs):
     return io.open(
         join(dirname(__file__), *names),
@@ -17,17 +18,31 @@ def read(*names, **kwargs):
     ).read()
 
 
+def remove_rst_roles(text):
+    return re.sub(r':[a-z]+:`~?(.*?)`', r'``\1``', text)
+
+
+def expand_includes(text, path='.'):
+    """Recursively expands includes in given text."""
+    def read_and_expand(match):
+        filename = match.group('filename')
+        filename = join(path, filename)
+        text = read(filename)
+        return expand_includes(
+            text, path=join(path, dirname(filename)))
+
+    return re.sub(ur'^\.\. include:: (?P<filename>.*)$',
+                  read_and_expand,
+                  text,
+                  flags=re.MULTILINE)
+
+
 setup(
     name="processor",
     version="0.1.0",
     license="BSD",
     description="A microframework to build source -> filter -> action workflows.",
-    long_description="%s\n%s" % (
-        read("README.rst"),
-        re.sub(
-            ":obj:`~?(.*?)`",
-            r"``\1``",
-            read("CHANGELOG.rst"))),
+    long_description=remove_rst_roles(expand_includes(read('README.rst'))),
     author="Alexander Artemenko",
     author_email="svetlyak.40wt@gmail.com",
     url="https://github.com/svetlyak40wt/python-processor",
