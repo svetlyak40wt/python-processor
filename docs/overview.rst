@@ -1,5 +1,5 @@
 Simple rules
-============
+==============
 
 Python processor is a tool for creating chained pipelines for dataprocessing.
 It have very few key concepts:
@@ -41,6 +41,10 @@ requires a different set of fields. Call to ``outputs.slack(SLACK_URL)`` returns
 function which gets an object and send it to the specified Slack's endpoint.
 
 It is just example, for working snippets, continue reading this documention ;-)
+
+.. Note:: By the way, did you know there is a Lisp dialect which runs on Python
+          virtual machine? It's name is HyLang, and python processor is written in this
+          language.
 
     
 Installation
