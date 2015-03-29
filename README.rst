@@ -176,4 +176,6 @@ To run the all tests run::
 
     tox
 
+.. include:: AUTHORS.rst
 .. include:: CHANGELOG.rst
+
