@@ -1,3 +1,48 @@
+Simple rules
+============
+
+Python processor is a tool for creating chained pipelines for dataprocessing.
+It have very few key concepts:
+
+Data object
+    Any python dict with two required fields: ``source`` and ``type``.
+Source
+    Any function which returns iterable sequence of ``data objects``.
+Output
+    A function which accepts a ``data object`` as input and could output another
+    (or same) ``data object`` as result.
+Predicate
+    Pipeline consists from sources outputs, but ``predicate`` decides which
+    ``data object`` should be processed by which ``output``.
+
+Quick example
+=============
+
+Here is example of pipeline which reads IMAP folder and sends all emails to Slack chat:
+
+.. code:: python
+
+    run_pipeline(
+        sources=[sources.imap('imap.gmail.com'
+                              'username',
+                              'password'
+                              'INBOX')],
+        rules=[(for_any_message, [email_to_slack, outputs.slack(SLACK_URL)])])
+
+Here you construct a pipeline, which uses ``sources.imap`` for reading imap folder
+"INBOX" of ``username@gmail.com``. Function ``for_any_message`` is a predicate saying
+something like that: ``lambda data_object: True``. In more complex case predicates
+could be used for routing dataobjects to different processors.
+
+Functions ``email_to_slack`` and ``outputs.slack(SLACK_URL)`` are processors. First one
+is a simple function which accepts data object, returned by imap source and transforming
+it to the data object which could be used by slack.output. We need that because slack
+requires a different set of fields. Call to ``outputs.slack(SLACK_URL)`` returns a
+function which gets an object and send it to the specified Slack's endpoint.
+
+It is just example, for working snippets, continue reading this documention ;-)
+
+    
 Installation
 ============
 
@@ -15,8 +60,14 @@ Then install the ``processor``:::
 
     pip install processor
 
+
+Usage
+=====
+
 Now create an executable python script, where you'll place your pipline's configuration.
-Usually it is looks like that:
+For example, this simple code creates a process line which searches new results in Twitter
+and outputs them to console. Of cause, you can output them not only to console, but also
+post by email, to Slack chat or everywhere else if there is an output for it:
 
 .. code:: python
 

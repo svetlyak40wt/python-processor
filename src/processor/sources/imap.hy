@@ -43,6 +43,7 @@
 (defn decode-message [item]
   (setv msg (email.message_from_bytes item))
   {"type" "email"
+   "source" "imap"
    "headers" (email-headers msg)
    "plain-body" (email-body msg "text/plain")
    "html-body" (email-body msg "text/html")})
