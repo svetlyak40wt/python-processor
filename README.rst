@@ -5,7 +5,7 @@ python-processor
 Badges
 ======
 
-| |docs| |changelog| |travis| |appveyor| |coveralls| |landscape| |scrutinizer|
+| |docs| |changelog| |travis| |coveralls| |landscape| |scrutinizer|
 | |version| |downloads| |wheel| |supported-versions| |supported-implementations|
 
 .. |docs| image:: https://readthedocs.org/projects/python-processor/badge/?style=flat
@@ -19,10 +19,6 @@ Badges
 .. |travis| image:: http://img.shields.io/travis/svetlyak40wt/python-processor/master.png?style=flat
     :alt: Travis-CI Build Status
     :target: https://travis-ci.org/svetlyak40wt/python-processor
-
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/github/svetlyak40wt/python-processor?branch=master
-    :alt: AppVeyor Build Status
-    :target: https://ci.appveyor.com/project/svetlyak40wt/python-processor
 
 .. |coveralls| image:: http://img.shields.io/coveralls/svetlyak40wt/python-processor/master.png?style=flat
     :alt: Coverage Status
@@ -72,13 +68,3 @@ Development
 To run the all tests run::
 
     tox
-
-
-Twitter source
-==============
-
-* Go to https://apps.twitter.com
-* Create new app.
-* Go to "Keys and Access Tokens" tabs.
-* Copy "Consumer Key", "Consumer Secret".
-* Create "Access Token" and "Access Secret" and copy them too.

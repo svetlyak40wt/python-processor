@@ -7,9 +7,9 @@ It have very few key concepts:
 Data object
     Any python dict with two required fields: ``source`` and ``type``.
 Source
-    Any function which returns iterable sequence of ``data objects``.
+    Any function which returns iterable sequence of ``data objects``. See `full list of sources`_ in the docs.
 Output
-    A function which accepts a ``data object`` as input and could output another
+    A function which accepts a ``data object`` as input and could output another. See `full list of outputs`_ in the docs.
     (or same) ``data object`` as result.
 Predicate
     Pipeline consists from sources outputs, but ``predicate`` decides which
@@ -102,3 +102,7 @@ Running this code, will fetch new results for search by query ``My Company``
 and output them on the screen. Of course, you could use any other ``output``,
 supported by the ``processor``. Browse online documentation to find out
 which sources and outputs are supported and for to configure them.
+
+
+.. _full list of sources: sources.html
+.. _full list of outputs: outputs.html

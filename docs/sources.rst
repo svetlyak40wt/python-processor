@@ -2,6 +2,8 @@
 Sources
 =======
 
+.. _full list of sources:
+
 IMAP
 ====
 
@@ -39,8 +41,8 @@ Twitter
 
 .. _Twitter's documentation: https://dev.twitter.com/oauth/overview/application-owner-access-tokens
 
-search
-------
+twitter.search
+--------------
 
 This source runs search by given query in Twitter and returns fresh
 results::
@@ -63,8 +65,8 @@ type
 .. _search/tweets: https://dev.twitter.com/rest/reference/get/search/tweets
 
 
-followers
----------
+twitter.followers
+-----------------
 
 First invocation returns all who you follows, each next -- only new followers::
 
