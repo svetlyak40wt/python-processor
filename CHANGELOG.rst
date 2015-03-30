@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.2.1 (2015-03-30)
+------------------
+
+Fixed error in ``import-or-error`` macro, which prevented from using 3-party libraries.
+
 0.2.0 (2015-03-30)
 ------------------
 

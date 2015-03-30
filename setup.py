@@ -39,7 +39,7 @@ def expand_includes(text, path='.'):
 
 setup(
     name="processor",
-    version="0.2.0",
+    version="0.2.1",
     license="BSD",
     description="A microframework to build source -> filter -> action workflows.",
     long_description=remove_rst_roles(expand_includes(read('README.rst'))),
