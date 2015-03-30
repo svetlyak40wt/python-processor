@@ -14,3 +14,11 @@
 
 (defmacro with-log-name [name &rest body]
   `(with-log-name-and-fields ~name {} ~@body))
+
+
+(defmacro import-or-error [args message]
+  `(try (import ~@args)
+        (catch [e ImportError]
+          (print ~message)
+          (import sys)
+          (sys.exit 1))))

@@ -31,7 +31,7 @@ def expand_includes(text, path='.'):
         return expand_includes(
             text, path=join(path, dirname(filename)))
 
-    return re.sub(ur'^\.\. include:: (?P<filename>.*)$',
+    return re.sub(r'^\.\. include:: (?P<filename>.*)$',
                   read_and_expand,
                   text,
                   flags=re.MULTILINE)
@@ -39,7 +39,7 @@ def expand_includes(text, path='.'):
 
 setup(
     name="processor",
-    version="0.1.0",
+    version="0.2.0",
     license="BSD",
     description="A microframework to build source -> filter -> action workflows.",
     long_description=remove_rst_roles(expand_includes(read('README.rst'))),
@@ -71,13 +71,16 @@ setup(
     ],
     install_requires=[
         'hy',
-        'feedparser',
-        'python-dateutil',
-        'IMAPClient',
-        'feedgen',
         'twiggy-goodies',
-        'requests-oauthlib',
     ],
+    extras_require={
+        'sources.imap': ['IMAPClient'],
+        'sources.twitter': ['requests-oauthlib'],
+        'outputs.rss': ['feedgen'],
+        'outputs.slack': ['requests'],
+        # 'feedparser',
+        # 'python-dateutil',
+    },
     entry_points={
         "console_scripts": [
             "processor = processor.__main__:main"

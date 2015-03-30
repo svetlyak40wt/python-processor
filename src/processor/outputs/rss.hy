@@ -1,7 +1,8 @@
+(require processor.utils.macro)
+
 (import codecs)
 (import [hashlib [md5]])
 (import [processor.storage [get-storage]])
-(import [feedgen.feed [FeedGenerator]])
 
 ;; Uses http://lkiesow.github.io/python-feedgen/
 
@@ -9,6 +10,9 @@
                    [title "Rss Feed"]
                    [description "Without description"]
                    [link "no link"]]
+  (import-or-error [feedgen.feed [FeedGenerator]]
+                   "Please, install 'feedgen' library to use 'rss' output.")
+
   (setv feed (FeedGenerator))
   (.title feed title)
   (.link feed {"rel" "alternate"

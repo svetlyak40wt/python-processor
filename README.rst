@@ -105,7 +105,7 @@ It is just example, for working snippets, continue reading this documention ;-)
 Installation
 ============
 
-Create viritualenv with python3:::
+Create a virtual environment with python3:::
   
    virtualenv --python=python3 env
    source env/bin/activate

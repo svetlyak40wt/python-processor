@@ -1,7 +1,6 @@
 (import email)
 (require processor.utils.macro)
 
-(import [imapclient [IMAPClient]])
 (import [processor.storage [get-storage]])
 
 
@@ -50,6 +49,9 @@
 
 
 (defn imap [hostname username password folder &optional [limit 10]]
+  (import-or-error [imapclient [IMAPClient]]
+                   "Please, install 'imapclient' library to use 'imap' source.")
+
   (setv server (apply IMAPClient [hostname] {"use_uid" True
                                                      "ssl" True}))
   (setv [get-value set-value] (get-storage "imap-source"))

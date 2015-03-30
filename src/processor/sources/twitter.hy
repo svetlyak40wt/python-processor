@@ -3,10 +3,9 @@
 
 (import urllib)
 
-(import [itertools [takewhile]])
-(import [requests_oauthlib [OAuth1Session]])
 (import [processor.storage [get-storage]])
 (import [processor.utils [merge-dicts]])
+(import [itertools [takewhile]])
 (import [twiggy_goodies.threading [log]])
 
 
@@ -21,6 +20,9 @@
 
 
 (defn search [query &optional consumer_key consumer_secret access_token access_secret]
+  (import-or-error [requests_oauthlib [OAuth1Session]]
+                   "Please, install 'requests-oauthlib' to use 'twitter.search' source.")
+  
   (defn add-source-and-type [tweet]
     (merge-dicts tweet {"source" "twitter.search"
                         "type" "twitter.tweet"}))
@@ -56,6 +58,9 @@
 
 
 (defn followers [&optional consumer_key consumer_secret access_token access_secret]
+  (import-or-error [requests_oauthlib [OAuth1Session]]
+                   "Please, install 'requests-oauthlib' to use 'twitter.followers' source.")
+
   (defn add-source-and-type [tweet]
     (merge-dicts tweet {"source" "twitter.followers"
                         "type" "twitter.user"}))
