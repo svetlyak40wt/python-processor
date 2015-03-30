@@ -1,7 +1,9 @@
 from invoke import run, task
 
 @task
-def upload():
+def release():
+    run('git push')
+    run('git push --tags')
     run('python setup.py register')
     run('python setup.py sdist upload')
     run('python setup.py bdist_wheel upload')
