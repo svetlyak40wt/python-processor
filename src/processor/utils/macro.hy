@@ -17,7 +17,7 @@
 
 
 (defmacro import-or-error [args message]
-  `(try (import ~@args)
+  `(try (import ~args)
         (catch [e ImportError]
           (print ~message)
           (import sys)
