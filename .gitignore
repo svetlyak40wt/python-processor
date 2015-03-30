@@ -57,7 +57,7 @@ docs/_build
 mail2rss.py
 /rss-feed.xml
 /*.db
-do-*.py
+/do-*.py
 /*.log
 .\#*
 \#*
