@@ -163,6 +163,21 @@ which sources and outputs are supported and for to configure them.
 .. _full list of outputs: outputs.html
 
 
+Ideas for Sources and Outputs
+=============================
+
+* ``web-hook`` endpoint `(in progress)`.
+* ``tail`` source which reads file and outputs lines appeared in a file between invocations
+  or is able to emulate ``tail -f`` behaviour. Python module
+  `tailer <https://pypi.python.org/pypi/tailer/>`_ could be used here.
+* ``grep`` output -- a filter to grep some fields using patterns. With ``tail`` and ``grep``
+  you could build a pipeline which watch on a log and send errors by email or to the chat.
+* ``xmpp`` output.
+* ``irc`` output.
+* ``rss/atom feed reader``.
+* `suggest your ideas!`
+
+
 Documentation
 =============
 

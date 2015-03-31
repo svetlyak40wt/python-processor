@@ -17,5 +17,6 @@ def serve_docs():
     run(build_command)
 
     server = Server()
+    server.watch('*.rst', shell(build_command))
     server.watch('docs/', shell(build_command))
     server.serve(root='dist/docs')
