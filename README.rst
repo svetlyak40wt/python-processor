@@ -175,6 +175,10 @@ Ideas for Sources and Outputs
 * ``xmpp`` output.
 * ``irc`` output.
 * ``rss/atom feed reader``.
+* ``weather`` source which tracks tomorrow's weather forecast and outputs a message if it was
+  changed significantly, for example from "sunny" to "rainy".
+* ``github`` some integrations with github API?
+* ``jira`` or other task tracker of your choice?
 * `suggest your ideas!`
 
 
