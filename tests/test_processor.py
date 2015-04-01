@@ -33,3 +33,19 @@ def test_messsages_extractor():
     desired_result = [1, 6, 2, 7, 3, 4, 8, 5]
     result = list(extract_messages([source1, source2]))
     eq_(desired_result, result)
+
+
+def test_source_as_a_function():
+    items = [1, 2, 3]
+    result = []
+
+    def source():
+        if items:
+            value = items.pop()
+            print(value)
+            return value
+        print('None')
+    run_pipeline(
+        [source],
+        [(lambda item: True, [result.append])])
+    eq_([3, 2, 1], result)

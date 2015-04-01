@@ -62,7 +62,8 @@ It have very few key concepts:
 Data object
     Any python dict with two required fields: ``source`` and ``type``.
 Source
-    Any function which returns iterable sequence of ``data objects``. See `full list of sources`_ in the docs.
+    An iterable sequence of ``data objects`` or a function which returns ``data objects``.
+    See `full list of sources`_ in the docs.
 Output
     A function which accepts a ``data object`` as input and could output another. See `full list of outputs`_ in the docs.
     (or same) ``data object`` as result.

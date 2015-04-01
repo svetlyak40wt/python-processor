@@ -1,5 +1,6 @@
 (import [collections.abc [Iterable]])
 
+
 (defn extract_messages [sources]
     """Returns messages, taking
     them one by one from each source.
@@ -39,8 +40,22 @@
   msg)
 
 
+(defn make-generator [func]
+  "Makes generator from a function,
+calling it until it return None and yielding returned values"
+  (setv value (func))
+  (while (not (is_none value))
+    (yield value)
+    (setv value (func))))
+
+
 (defn run_pipeline [sources rules]
-    (for [msg (extract_messages sources)]
-        (for [(, trigger action) rules]
-            (if (trigger msg)
-              (run-action action msg)))))
+  (setv sources (list-comp
+                 (if (callable s)
+                   (make-generator s)
+                   s)
+                 [s sources]))
+  (for [msg (extract_messages sources)]
+    (for [(, trigger action) rules]
+      (if (trigger msg)
+        (run-action action msg)))))

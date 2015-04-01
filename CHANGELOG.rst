@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.3.0 (2015-04-01)
+------------------
+
+* Added a `web.hook`_ source.
+* Now `source` could be not only a iterable object, but any function which returns values.
+
+.. _web.hook: /sources.html#web-hook
+
 0.2.1 (2015-03-30)
 ------------------
 

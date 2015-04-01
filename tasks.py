@@ -20,3 +20,8 @@ def serve_docs():
     server.watch('*.rst', shell(build_command))
     server.watch('docs/', shell(build_command))
     server.serve(root='dist/docs')
+
+
+@task
+def test():
+    run('nosetests')
