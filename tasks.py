@@ -24,4 +24,4 @@ def serve_docs():
 
 @task
 def test():
-    run('nosetests')
+    run('nosetests --nocapture --verbose')

@@ -4,6 +4,23 @@ Sources
 
 .. _full list of sources:
 
+mix
+====
+
+This is a helper to mix data objects from two or more sources into one stream.
+When mixed, dataobjects are interleaved. For example::
+
+  >>> from processor import sources
+  >>> source1 = [1,2,3]
+  >>> source2 = [5,6,7,8]
+  >>> print(list(sources.mix(source1, source2)))
+  
+  [1, 5, 2, 6, 3, 7, 8]
+
+Mix source iterates through each given source until it raises StopIteration.
+That means, if you'll give it an infinite sources like a `web.hook`_, then
+resulting source also will be infinite.
+
 imap
 ====
 
@@ -14,11 +31,11 @@ Example::
 
   from processor import run_pipeline, source, outputs
   run_pipeline(
-      sources=[sources.imap("imap.gmail.com",
+      sources.imap("imap.gmail.com",
                             "username",
                             "****word",
-                            "Inbox")],
-      rules=[(for_any_message, [outputs.debug()])])
+                            "Inbox"),
+      outputs.debug())
 
 This script will read ``Inbox`` folder at server ``imap.gmail.com``
 and print resulting dicts to the terminal's screen.
@@ -47,9 +64,8 @@ results::
 
   from processor import run_pipeline, source, outputs
   run_pipeline(
-      sources=[sources.twitter.search(
-                  'iOS release notes', **twitter_creds)],
-      rules=[(for_any_message, [outputs.debug()])])
+      sources.twitter.search('iOS release notes', **twitter_creds),
+      outputs.debug())
 
 It returns following fields:
 
@@ -70,8 +86,8 @@ First invocation returns all who you follows, each next -- only new followers::
 
   from processor import run_pipeline, source, outputs
   run_pipeline(
-      sources=[sources.twitter.followers(**twitter_creds)],
-      rules=[(for_any_message, [outputs.debug()])])
+      sources.twitter.followers(**twitter_creds),
+      outputs.debug())
 
 
 It returns following fields:
@@ -94,8 +110,8 @@ All GET and POST requests are transformed into the data objects.
 
 Configuration example::
   
-  run_pipeline([sources.web.hook(host='0.0.0.0', port=1999)],
-               [(lambda item: True, outputs.debug())])
+  run_pipeline(sources.web.hook(host='0.0.0.0', port=1999),
+               outputs.debug())
 
 By default, it starts on ``localhost:8000``, but in this case on
 ``0.0.0.0:1999``.

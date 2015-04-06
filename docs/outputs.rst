@@ -10,6 +10,29 @@ now -- returns ``pprint`` function, but possible interface will be extended
 in future to select which fields to ouput or suppress, cache or something like
 that.
 
+fanout
+======
+
+Fanout output is useful, when you want to feed one data objects stream to two
+or more pipelines. For example, you could send some events by email and into
+the `slack`_ chat simultaneously::
+
+  run_pipeline(some_source(),
+               outputs.fanout(
+                  outputs.email('vaily@pupkin.name'),
+                  outputs.slack(SLACK_URL)))
+
+Or if you need to preprocess data objects for each output, then code will
+looks like this::
+
+  run_pipeline(some_source(),
+               outputs.fanout(
+                  [prepare_email, outputs.email('vaily@pupkin.name')],
+                  [prepare_slack, outputs.slack(SLACK_URL)]))
+
+Where ``prepare_email`` and ``prepare_slack`` just a functions which return
+data objects with fields for `email` and `slack`_ outputs.
+
 rss
 ===
 
