@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.4.0 (2015-04-06)
+------------------
+
+* Function ``run_pipline`` was simplified and now accepts only one source and one ouput.
+  To implement more complex pipelines, use ``sources.mix`` and ``outputs.fanout`` helpers.
+
 0.3.0 (2015-04-01)
 ------------------
 
