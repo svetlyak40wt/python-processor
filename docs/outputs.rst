@@ -33,6 +33,37 @@ looks like this::
 Where ``prepare_email`` and ``prepare_slack`` just a functions which return
 data objects with fields for `email` and `slack`_ outputs.
 
+
+email
+=====
+
+Sends an email to given address via configured SMTP server.
+When configuring, you have to specify ``host``, ``port``, ``user`` and ``password``.
+And also a ``mail_to``, which is an email of recipient who should receive a message
+and ``mail_from`` which should be a tuple like ``(name, email)`` and designate
+sender. Here is an example::
+
+  run_pipeline(
+    [{'subject': 'Hello from processor',
+      'body': 'The <b>HTML</b> body.'}],
+    outputs.email(mail_to='somebody@gmail.com',
+                  mail_from=('Processor', 'processor@yandex.ru'),
+                  host='smtp.yandex.ru',
+                  user='processor',
+                  password='***',
+                  port=465,
+                  ssl=True,
+              ))
+
+
+Each data object should contain these fields:
+
+**subject**
+    Email's subject
+**body**
+    HTML body of the email.
+
+
 rss
 ===
 
