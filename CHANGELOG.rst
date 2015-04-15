@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.5.0 (2015-04-15)
+------------------
+
+Good news, everyone! New output was added - ``email``.
+Now Processor is able to notify you via email about any event.
+
 0.4.0 (2015-04-06)
 ------------------
 
