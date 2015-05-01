@@ -1,4 +1,7 @@
 (import email)
+(import pytz)
+(import imaplib)
+(import datetime)
 (require processor.utils.macro)
 
 (import [processor.storage [get-storage]])
@@ -30,9 +33,11 @@
 
 (defn email-body [message content_type]
   (if (= (message.get_content_type) content_type)
-    (.decode (message.get_payload None True)
-             (or (message.get_content_charset)
-                 "utf-8"))
+    (do (setv charset (or (message.get_content_charset)
+                          "utf-8"))
+        (.decode (message.get_payload None True)
+                 charset
+                 "replace"))
     
     (if (message.is_multipart)
       (first-not-null (genexpr (email-body item content_type)
@@ -66,9 +71,29 @@
     
     (.login server username password)
     (.select_folder server folder)
-    
-    (setv message-ids (.search server ["NOT DELETED"]))
 
+    (setv search-criterion
+          (if (> seen-position 0)
+            ;; if this is not a first time when we are fetching data
+            ;; then just fetch every new message
+            (.format "UID {0}:*" (+ seen-position 1))
+            ;; if wer are fetching for the first time, then we have
+            ;; to limit message by date because when there is big amount
+            ;; of data, then imaplib unable to download that many data at once
+            (do 
+             (setv since (- (datetime.datetime.utcnow)
+                            (datetime.timedelta 1))) ; we are only interested in letters for the last 1 day
+             (setv since (imaplib.Time2Internaldate
+                          (apply since.replace
+                                 []
+                                 {"tzinfo" pytz.UTC})))
+                                ; now just strip a date part from time part
+             (setv since (get (.split (.strip since "\"") " " 1)
+                              0))
+             (.format "NOT DELETED SINCE {0}" since))))
+
+    ;; docs for the SEARCH command http://tools.ietf.org/html/rfc3501#section-6.4.4
+    (setv message-ids (.search server [search-criterion]))
                                 ; skip all message ids which are already seen
     (setv message-ids (list-comp id [id message-ids] (> id seen-position)))
     (setv message-ids (slice message-ids (- limit)))
@@ -77,10 +102,10 @@
     (setv messages (list-comp (get item (.encode "RFC822" "utf-8"))
                               [item (.values messages)]))
     (setv messages (map decode-message messages))
-    (setv results (list messages))
-    (if message-ids
-      (with-log-fields {"message_ids" message-ids}
-        (log.info "We processed some message ids")
-        (set-value seen-position-key (max message-ids)))))
+    (setv results (list messages)))
+  (if message-ids
+    (with-log-fields {"message_ids" message-ids}
+      (log.info "We processed some message ids")
+      (set-value seen-position-key (max message-ids))))
   results
 )
