@@ -52,9 +52,8 @@
                                   [item statuses]
                                   (> (get item "id")
                                      seen-id)))
-      (set-value seen-id-key max-id)
-      
-      (yield-from new-statuses))))
+      (yield-from new-statuses)
+      (set-value seen-id-key max-id))))
 
 
 (defn followers [&optional consumer_key consumer_secret access_token access_secret]
