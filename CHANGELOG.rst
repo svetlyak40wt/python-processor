@@ -1,6 +1,23 @@
 Changelog
 =========
 
+0.6.0 (2015-05-01)
+------------------
+
+The biggest change in this release is a new source – ``github.releases``.
+It is able to read all new releases in given repository and send them into
+processing pipeline. This works as for public repositories, and for private
+too. `Read the docs`_ for futher details.
+
+.. _Read the docs: /sources.html#github-releases
+
+Other changes are:
+
+* Storage backend now saves JSON database nicely pretty printed for you could read and edit it in your favorite editor. This is Emacs, right?
+* Twitter.search source now saves state after the tweet was processed. This way processor shouldn't loose tweets if there was exception somewhere in processing pipeline.
+* IMAP source was fixed and now is able to fetch emails from really big folders.
+
+
 0.5.0 (2015-04-15)
 ------------------
 
