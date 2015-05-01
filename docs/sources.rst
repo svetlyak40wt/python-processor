@@ -40,13 +40,66 @@ Example::
 This script will read ``Inbox`` folder at server ``imap.gmail.com``
 and print resulting dicts to the terminal's screen.
 
+github
+======
+
+Access to private repositories
+------------------------------
+
+To have access to private repositories, you need to generate a "personal
+access token" at the GitHub.
+
+All you need to do this, is to click `on the image below`_ and it will open a page
+with only scopes needed for the Processor:
+
+.. image:: images/github-private-token.png
+           :target: `on the image below`_
+   
+.. _on the image below: https://github.com/settings/tokens/new?scopes=repo,public_repo
+
+Then copy this token into the clipboard and pass it as a ``access_token`` parameter to each
+``github.****`` source.
+
+.. Note::
+   Access token not only let the processor read from private repositories,
+   but also makes rate limits higher, so you could poll GitHub's API more frequently.
+
+   Without token you can make only 60 request per hour, but with token – 5000 requests per hour.
+
+github.releases
+---------------
+
+Outputs new releases of the given repository. On first call, it will output all the most recent
+releases, then remeber position on next calls will return only new releases if any were found.
+
+Example::
+
+  from processor import run_pipeline, source, outputs
+  
+  github_creds = dict(access_token='keep-it-in-secret')
+  run_pipeline(
+      sources.github.releases('https://github.com/mozilla/metrics-graphics', **github_creds),
+      outputs.debug())
+
+This source returns following fields:
+
+source
+    github.releases
+type
+    github.release
+payload
+    The object returned by GitHub's API. See section "Response" at GitHub's docs on `repos/releases`_.
+
+.. _repos/releases: https://developer.github.com/v3/repos/releases/#response
+
+      
 twitter
 =======
 
 .. Note::
    To use this source, you need to obtain an access token from twitter.
    There is a detailed instruction how to do this `Twitter's documentation`_.
-   You could encapsulate twitter credentials into a dict2::
+   You could encapsulate twitter credentials into a dict::
 
       twitter_creds = dict(consumer_key='***', consumer_secret='***',
                            access_token='***', access_secret='***')
