@@ -25,7 +25,7 @@
                  {}))
     (assoc data plugin-name plugin-data)
     (with [[f (open db-filename "w")]]
-          (json.dump data f)))
+          (apply json.dump [data f] {"sort_keys" True "indent" 4})))
 
   (defn get-value [key &optional [default not-given]]
     (setv db-filename "processor.db")
