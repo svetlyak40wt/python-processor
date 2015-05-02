@@ -9,7 +9,7 @@ It is able to read all new releases in given repository and send them into
 processing pipeline. This works as for public repositories, and for private
 too. `Read the docs`_ for futher details.
 
-.. _Read the docs: /sources.html#github-releases
+.. _Read the docs: https://python-processor.readthedocs.org/en/latest/sources.html#github-releases
 
 Other changes are:
 
@@ -36,7 +36,7 @@ Now Processor is able to notify you via email about any event.
 * Added a `web.hook`_ source.
 * Now `source` could be not only a iterable object, but any function which returns values.
 
-.. _web.hook: /sources.html#web-hook
+.. _web.hook: https://python-processor.readthedocs.org/en/latest/sources.html#web-hook
 
 0.2.1 (2015-03-30)
 ------------------
