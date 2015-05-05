@@ -76,8 +76,10 @@ setup(
     extras_require={
         'sources.imap': ['IMAPClient'],
         'sources.twitter': ['requests-oauthlib'],
+        'sources.github': ['requests'],
         'outputs.rss': ['feedgen'],
         'outputs.slack': ['requests'],
+        'outputs.xmpp': ['sleekxmpp'],
         # 'feedparser',
         # 'python-dateutil',
     },

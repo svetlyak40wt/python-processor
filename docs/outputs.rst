@@ -87,7 +87,7 @@ slack
 Write a message to Slack chat. A message could be sent to a
 channel or directly to somebody.
 
-This outputter has one required parameter ``url``. You could
+This output has one required parameter ``url``. You could
 obtain it at the Slack's integrations page. Select "Incoming WebHooks"
 among all available integrations. Add a hook and copy it's ``url``
 into the script. Other parameter is ``defaults``. It is a dict to be merged with each data object and by default it has ``{"renderer": "markdown", "username": "Processor"}`` value.
@@ -105,5 +105,27 @@ Each data object should contain these fields:
 **channel**
     A public channel can be specified with ``#other-channel``, and a Direct Message with ``@username``.
 
-.. _Emoji Cheat Sheet: http://www.emoji-cheat-sheet.com
+    
+XMPP
+=====
+
+XMPP output sends messages to given jabber id (JID). It connects
+as a Jabber client to a server and sends messages through it.
+
+.. Note::
+   If you use Google's xmpp, then you will need to add Bot's JID into
+   your roster. Otherwise, messages will not be accepted by server.
+   
+This output is configured by three parameters ``jid``, ``password`` and ``host``.
+They are used to connect to a server as a jabber client. Optionally,
+you could specify ``port`` (which is 5222 by default) and ``recipients`` –
+a list of who need to be notified. Recipients list could be overriden
+if data object contains field ``recipients``.
+
+Each data object should contain these fields:
+
+**text**
+    Text of the message to be posted.
+**recipients** (optional)
+    A list of JIDs to be notified.
 

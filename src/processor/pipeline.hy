@@ -61,6 +61,15 @@ calling it until it return None and yielding returned values"
 ;;         (run-action action msg)))))
 
 
+(setv _on-close-callbacks [])
+
+
+(defn on-close [func]
+  "Add `func` to the list of callbacks to be called
+   when all sources will be exhausted."
+  (.append _on-close-callbacks func))
+
+
 (defn run_pipeline [source pipeline]
   (setv source (if (callable source)
                  (make-generator source)
@@ -74,4 +83,7 @@ calling it until it return None and yielding returned values"
       (setv msg (output msg))
         (if-not msg
                 (break))
-        msg)))
+        msg))
+  
+  (for [callback _on-close-callbacks]
+    (apply callback)))
