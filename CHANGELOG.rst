@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.7.0 (2015-05-05)
+------------------
+
+New output – XMPP was added and now processor is able
+to notify Jabber users.
+
 0.6.0 (2015-05-01)
 ------------------
 
