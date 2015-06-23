@@ -33,3 +33,20 @@
   (eq_ [1 3 5 7] odds)
   (eq_ [2 4 6] evens))
 
+
+(defn test_fanout_outputs_items []
+  (setv source [1 2])
+  (setv results [])
+
+  ;; here we use `identity` function to make
+  ;; pipeline longer and ensure that intermediate
+  ;; items are not yielded from `fanout`
+  (run-pipeline source
+                [(outputs.fanout
+                  [identity
+                   (fn [item] (+ item 10))]
+                  [identity
+                   (fn [item] (* item item))])
+                 results.append])
+
+  (eq_ [11 1 12 4] results))
