@@ -1,5 +1,6 @@
 (import [collections.abc [Iterable]])
 (import [collections [deque]])
+(import pdb)
 
 
 ;; (defn extract_messages [sources]
@@ -84,19 +85,22 @@ calling it until it return None and yielding returned values"
   (for [msg source]
     ;; if source returned something like
     ;; list, then it's items are processed separately
-    (if (and (not (isinstance msg dict))
-             (isinstance msg Iterable))
-      (queue.extend msg)
-      (queue.append msg))
+    (setv msg (if (isinstance msg dict)
+                [msg]
+                msg))
 
-    (while queue
-      (setv msg (queue.popleft))
+    (pdb.set_trace)
+    (when (and msg pipeline)
+      (setv step (first pipeline))
 
-      (for [output pipeline]
-        (setv msg (output msg))
-        (if-not msg
-                (break))
-        msg)))
+      (for [item msg]
+        (setv response (step item))
+        (setv response (if (or (isinstance response dict)
+                               (not (isinstance response Iterable)))
+                         [response]
+                         response))
+
+        (run_pipeline response (rest pipeline)))))
   
   (for [callback _on-close-callbacks]
     (apply callback)))
