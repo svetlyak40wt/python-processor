@@ -70,3 +70,13 @@
                          evens.append]))
   (eq_ [1 3 5 7] odds)
   (eq_ [2 4 6] evens))
+
+
+(defn test_a_list_of_items_instead_of_dict []
+  "If some pipeline step returns not a dicionary, but iterable object
+  then each item in it is processed separately in the rest of the pipeline."
+  (setv source [1 [2 3] 4])
+  (setv results [])
+
+  (run_pipeline source results.append)
+  (eq_ [1 2 3 4] results))

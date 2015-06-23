@@ -1,4 +1,5 @@
 (import [collections.abc [Iterable]])
+(import [collections [deque]])
 
 
 ;; (defn extract_messages [sources]
@@ -77,13 +78,25 @@ calling it until it return None and yielding returned values"
   (setv pipeline (if (isinstance pipeline list)
                    pipeline
                    [pipeline]))
-  
+
+  (setv queue (deque))
+
   (for [msg source]
-    (for [output pipeline]
-      (setv msg (output msg))
+    ;; if source returned something like
+    ;; list, then it's items are processed separately
+    (if (and (not (isinstance msg dict))
+             (isinstance msg Iterable))
+      (queue.extend msg)
+      (queue.append msg))
+
+    (while queue
+      (setv msg (queue.popleft))
+
+      (for [output pipeline]
+        (setv msg (output msg))
         (if-not msg
                 (break))
-        msg))
+        msg)))
   
   (for [callback _on-close-callbacks]
     (apply callback)))
