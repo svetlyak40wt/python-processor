@@ -94,9 +94,14 @@
 
     ;; docs for the SEARCH command http://tools.ietf.org/html/rfc3501#section-6.4.4
     (setv message-ids (.search server [search-criterion]))
-                                ; skip all message ids which are already seen
-    (setv message-ids (list-comp id [id message-ids] (> id seen-position)))
-    (setv message-ids (slice message-ids (- limit)))
+    
+    (if (> seen-position 0)
+      ;; if already processed this folder in past, then output only unprocessed
+      ;; messages
+      (setv message-ids (list-comp id [id message-ids] (> id seen-position)))
+      ;; otherwise, just take N messages from the top
+      (setv message-ids (list (cut message-ids (- limit)))))
+    
     (setv messages (.fetch server
                            message-ids ["RFC822"]))
     (setv messages (list-comp (get item (.encode "RFC822" "utf-8"))

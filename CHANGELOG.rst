@@ -6,6 +6,10 @@ Changelog
 
 * Code was fixed to work with latest Hy, from GitHub.
 * Added ``twitter.mentions`` source, to read stream of mentions from the Twitter.
+* Fixed a way how number of messages from IMAP folder is limited. Previously
+  limit was applied even when we already know an ID of the last seen message,
+  but now limit is ignored in this case and only applied when visiting the
+  folder first time.
 
 0.7.0 (2015-05-05)
 ------------------
