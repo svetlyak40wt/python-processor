@@ -17,7 +17,7 @@
 ;;       (try
 ;;        (setv value (next source))
        
-;;        (catch [e StopIteration]
+;;        (except [e StopIteration]
 ;;          (del (get sources idx)))
        
 ;;        (else

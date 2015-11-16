@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.8.0 (Unreleased)
+------------------
+
+* Code was fixed to work with latest Hy, from GitHub.
+
 0.7.0 (2015-05-05)
 ------------------
 

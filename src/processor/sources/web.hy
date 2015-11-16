@@ -58,10 +58,10 @@
   (setv process-request (create-request-processor queue))
   
   (defclass Handler [BaseHTTPRequestHandler]
-    [[server_version "python-processor"]
-     [sys_version ""]
-     [do_GET process-request]
-     [do_POST process-request]])
+    [server_version "python-processor"
+     sys_version ""
+     do_GET process-request
+     do_POST process-request])
   
   (setv server (HTTPServer (tuple [host (int port)]) Handler))
   (setv worker (apply Thread [] {"target" server.serve_forever}))

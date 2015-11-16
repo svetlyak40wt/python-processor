@@ -11,12 +11,14 @@
 
 (defn rate-limited [data]
   "Checks if response from twitter contains error because rate limit was exceed."
-  (ap-if (.get data "errors")
-         (when (= (get (get it 0) "code")
-                  88)
-           (log.warning "Rate limited")
-           True)
-         False))
+  (setv errors (if (isinstance data dict)
+                 (.get data "errors")))
+  (if errors
+    (when (= (get (get it 0) "code")
+             88)
+      (log.warning "Rate limited")
+      True)
+    False))
 
 
 (defn search [query &optional consumer_key consumer_secret access_token access_secret]

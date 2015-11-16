@@ -12,7 +12,7 @@
                                                        "processor.db")]]
   (defn get-plugin-data []
     (setv data (if (os.path.exists db-filename)
-                 (with [[f (open db-filename "r")]]
+                 (with [f (open db-filename "r")]
                        (json.load f))
                  {}))
     (.setdefault data plugin-name {})
@@ -20,11 +20,11 @@
 
   (defn save-plugin-data [plugin-data]
     (setv data (if (os.path.exists db-filename)
-                 (with [[f (open db-filename "r")]]
+                 (with [f (open db-filename "r")]
                        (json.load f))
                  {}))
     (assoc data plugin-name plugin-data)
-    (with [[f (open db-filename "w")]]
+    (with [f (open db-filename "w")]
           (apply json.dump [data f] {"sort_keys" True "indent" 4})))
 
   (defn get-value [key &optional [default not-given]]

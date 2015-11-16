@@ -71,7 +71,10 @@ setup(
     ],
     install_requires=[
         'hy',
-        'twiggy-goodies',
+        'twiggy-goodies>=0.7.0',
+    ],
+    dependency_links=[
+        'git+git://github.com/hylang/hy.git@a3bd90390cb37b46ae33ce3a73ee84a0feacce7d#egg=hy',
     ],
     extras_require={
         'sources.imap': ['IMAPClient'],

@@ -39,15 +39,21 @@
    - title
    - body
   "
-  (setv [get-value set-value] (get-storage "rss-target"))
+  (with-log-fields {"filename" filename "limit" limit}
+    (log.info "Creating rss output")
+    (setv [get-value set-value] (get-storage "rss-target")))
   
   (defn rss-updater [obj]
-    (setv data (get-value filename []))
-    
-    (.append data obj)
-    (setv data (slice data (- limit)))
-    
-    (set-value filename data)
-    
-    (with [[f (codecs.open filename "w" "utf-8")]]
-          (.write f (create-feed data)))))
+    (with-log-fields {"filename" filename
+                      "title" (get obj "title")}
+      (log.info "Adding item to the feed")
+      
+      (setv data (get-value filename []))
+      (.append data obj)
+      (setv data (cut data (- limit)))
+      
+      (set-value filename data)
+
+      (log.info "Writing to the file")
+      (with [f (open filename "wb")]
+            (.write f (create-feed data))))))

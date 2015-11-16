@@ -8,20 +8,20 @@
                    "Please, install 'sleekxmpp' library to use 'xmpp' source.")
 
   (defclass Bot [ClientXMPP]
-    [[__init__ (fn [self jid password recipients]
-                 (.__init__ (super Bot self) jid password)
-                 (setv self.recipients recipients)
-                 (self.add_event_handler "session_start" self.start))]
-     
-     [start (fn [self event]
-              (self.send_presence)
-              (self.get_roster))]
-     
-     [send_to_recipients (fn [self message recipients]
-             (setv recipients (or recipients
-                                  self.recipients))
-             (for [recipient recipients]
-               (apply self.send_message [] {"mto" recipient "mbody" message})))]])
+    (defn __init__ [self jid password recipients]
+      (.__init__ (super Bot self) jid password)
+      (setv self.recipients recipients)
+      (self.add_event_handler "session_start" self.start))
+    
+    (defn start [self event]
+      (self.send_presence)
+      (self.get_roster))
+    
+    (defn send_to_recipients [self message recipients]
+      (setv recipients (or recipients
+                           self.recipients))
+      (for [recipient recipients]
+        (apply self.send_message [] {"mto" recipient "mbody" message}))))
   
   (setv bot (Bot jid password recipients))
   (bot.register_plugin "xep_0030") ;; Service Discovery
