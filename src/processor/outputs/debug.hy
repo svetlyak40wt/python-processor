@@ -1,4 +1,6 @@
 (import [pprint [pprint]])
 
 (defn debug []
-  pprint)
+  (defn debug_processor [item]
+    (pprint item)
+    item))

@@ -40,33 +40,27 @@
     (eq_ 1 (len warnings)))
 
 
-(defn test_fanout_with_functions []
-  (setv source [1 2 3 4 5 6 7])
-  (setv odds [])
-  (setv evens [])
+(defn test_source_can_return_lists_of_items_instead_of_dicts []
+  "Source can return not a dicionaries, but iterable objects
+  then each item in it is processed separately in the rest of the pipeline."
+  (setv source [1 [2 3] 4])
+  (setv results [])
 
-  (run_pipeline source (outputs.fanout
-                        (fn [item]
-                          (if (odd? item)
-                            (odds.append item)))
-                        (fn [item]
-                          (if (even? item)
-                            (evens.append item)))))
-  (eq_ [1 3 5 7] odds)
-  (eq_ [2 4 6] evens))
+  (run_pipeline source results.append)
+  (eq_ [1 2 3 4] results))
 
 
-(defn test_fanout_with_chains []
-  (setv source [1 2 3 4 5 6 7])
-  (setv odds [])
-  (setv evens [])
+(defn test_any_step_can_return_list_of_items_instead_of_dict []
+  "If some pipeline step returns not a dicionary, but iterable object
+  then each item in it is processed separately in the rest of the pipeline."
+  (setv source [1 2 4])
+  (setv results [])
 
-  (run_pipeline source (outputs.fanout
-                        [(fn [item] (if (odd? item)
-                                      item))
-                         odds.append]
-                        [(fn [item]  (if (even? item)
-                                       item))
-                         evens.append]))
-  (eq_ [1 3 5 7] odds)
-  (eq_ [2 4 6] evens))
+  (defn list_if_two [item]
+    (if (= item 2)
+      [2 3]
+      item))
+
+  (run_pipeline source [list_if_two results.append])
+  (eq_ [1 2 3 4] results))
+

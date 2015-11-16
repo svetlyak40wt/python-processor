@@ -1,4 +1,5 @@
 (import [collections.abc [Iterable]])
+(import [collections [deque]])
 
 
 ;; (defn extract_messages [sources]
@@ -74,16 +75,34 @@ calling it until it return None and yielding returned values"
   (setv source (if (callable source)
                  (make-generator source)
                  source))
-  (setv pipeline (if (isinstance pipeline list)
+  (setv pipeline (if (isinstance pipeline Iterable)
                    pipeline
                    [pipeline]))
-  
+
+  (setv queue (deque))
+
   (for [msg source]
-    (for [output pipeline]
-      (setv msg (output msg))
-        (if-not msg
-                (break))
-        msg))
+    ;; if source returned something like
+    ;; list, then it's items are processed separately
+    (setv msg (if (or (isinstance msg dict)
+                      (not (isinstance msg Iterable)))
+                [msg]
+                msg))
+
+    (when msg
+      (setv step (first pipeline))
+
+      (when step
+        (for [item msg]
+          (setv response (step item))
+          ;; if not None was returned, then process further
+          (lisp-if response
+                   (do
+                    (setv response (if (or (isinstance response dict)
+                                           (not (isinstance response Iterable)))
+                                     [response]
+                                     response))
+                    (run_pipeline response (list (rest pipeline)))))))))
   
   (for [callback _on-close-callbacks]
     (apply callback)))
