@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 * Code was fixed to work with latest Hy, from GitHub.
+* Added ``twitter.mentions`` source, to read stream of mentions from the Twitter.
 
 0.7.0 (2015-05-05)
 ------------------

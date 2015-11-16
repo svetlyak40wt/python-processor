@@ -107,3 +107,38 @@
     
     (yield-from (map add-source-and-type
                      new-followers))))
+
+
+(defn mentions [&optional consumer_key consumer_secret access_token access_secret]
+  (import-or-error [requests_oauthlib [OAuth1Session]]
+                   "Please, install 'requests-oauthlib' to use 'twitter.followers' source.")
+
+  (with-log-name "twitter-mentions"
+    (setv [get-value set-value] (get-storage "twitter-mentions"))
+    (setv seen-id-key "seen-id")
+    (setv seen-id (get-value seen-id-key 0))
+    
+    (setv url "https://api.twitter.com/1.1/statuses/mentions_timeline.json")
+    
+    (setv twitter (apply OAuth1Session []
+                          {"client_key" consumer_key
+                           "client_secret" consumer_secret
+                           "resource_owner_key" access_token
+                           "resource_owner_secret" access_secret}))
+    (log.info "Fetching mentions from twitter")
+
+    (setv response (twitter.get url))
+    (setv posts (response.json))
+
+    (unless (rate-limited posts)
+      (setv max-id (max (map (fn [item] (get item "id")) posts)))
+
+      (setv new-posts (genexpr {"source" "twitter.mentions"
+                                "type" "twitter.tweet"
+                                "payload" item}
+                               [item posts]
+                               (> (get item "id")
+                                  seen-id)))
+
+      (yield-from new-posts)
+      (set-value seen-id-key max-id))))
