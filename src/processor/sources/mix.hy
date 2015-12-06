@@ -18,8 +18,8 @@
          (del (get sources idx)))
        
        (else
-        (lisp-if value
-                 (yield value))
+        (lif value
+             (yield value))
         (setv idx (+ idx 1))))
 
       (if (>= idx (len sources))

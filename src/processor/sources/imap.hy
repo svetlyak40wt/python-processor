@@ -25,9 +25,9 @@
 (defn first-not-null [items]
   (setv result None)
   (for [item items]
-    (lisp-if item
-             (do (setv result item)
-                 (break))))
+    (lif item
+         (do (setv result item)
+             (break))))
   result)
 
 
@@ -108,9 +108,9 @@
                               [item (.values messages)]))
     (setv messages (map decode-message messages))
     (setv results (list messages)))
+  
   (if message-ids
     (with-log-fields {"message_ids" message-ids}
       (log.info "We processed some message ids")
-      (set-value seen-position-key (max message-ids))))
-  results
-)
+      (yield-from results)
+      (set-value seen-position-key (max message-ids)))))

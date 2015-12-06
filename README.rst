@@ -79,18 +79,18 @@ Here is example of pipeline which reads IMAP folder and sends all emails to Slac
 .. code:: python
 
     run_pipeline(
-        sources=[sources.imap('imap.gmail.com'
-                              'username',
-                              'password'
-                              'INBOX')],
-        rules=[(for_any_message, [email_to_slack, outputs.slack(SLACK_URL)])])
+        sources.imap('imap.gmail.com'
+                     'username',
+                     'password'
+                     'INBOX'),
+        [prepare_email_for_slack, outputs.slack(SLACK_URL)])
 
 Here you construct a pipeline, which uses ``sources.imap`` for reading imap folder
-"INBOX" of ``username@gmail.com``. Function ``for_any_message`` is a predicate saying
-something like that: ``lambda data_object: True``. In more complex case predicates
-could be used for routing dataobjects to different processors.
+"INBOX" of ``username@gmail.com``. In more complex case ``outputs.fanout``
+can be used for routing dataobjects to different processors and ``sources.mix`` can
+be used to merge items two or more sources into a one stream.
 
-Functions ``email_to_slack`` and ``outputs.slack(SLACK_URL)`` are processors. First one
+Functions ``prepare_email_to_slack`` and ``outputs.slack(SLACK_URL)`` are processors. First one
 is a simple function which accepts data object, returned by imap source and transforming
 it to the data object which could be used by slack.output. We need that because slack
 requires a different set of fields. Call to ``outputs.slack(SLACK_URL)`` returns a
@@ -111,15 +111,18 @@ Create a virtual environment with python3:::
    virtualenv --python=python3 env
    source env/bin/activate
 
+Install required version of hylang (this step is necessary because Hy syntax is not
+final yet and frequently changed by language maintainers):::
+
+  pip install -U 'git+git://github.com/hylang/hy.git@a3bd90390cb37b46ae33ce3a73ee84a0feacce7d#egg=hy'
+
 If you are on OSX, then install lxml on OSX separately:::
    
    STATIC_DEPS=true pip install lxml
 
-
 Then install the ``processor``:::
 
     pip install processor
-
 
 Usage
 =====

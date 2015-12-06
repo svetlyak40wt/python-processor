@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.9.0 (2015-12-06)
+------------------
+
+Code was fixed to work with HyLang from ``a3bd90390cb37b46ae33ce3a73ee84a0feacce7d``
+commit. Please, use this pinned version of HyLang and `subscribe`_ on future
+release notes to know when this requirement will change.
+
+.. _subscribe: https://allmychanges.com/p/python/processor/
+
 0.8.0 (2015-11-16)
 ------------------
 

@@ -103,10 +103,10 @@
                                        [item new-followers]))
 
     (.update seen new-followers-ids)
-    (set-value seen-key (list seen))
-    
     (yield-from (map add-source-and-type
-                     new-followers))))
+                     new-followers))
+    
+    (set-value seen-key (list seen))))
 
 
 (defn mentions [&optional consumer_key consumer_secret access_token access_secret]

@@ -39,7 +39,7 @@ def expand_includes(text, path='.'):
 
 setup(
     name="processor",
-    version="0.8.0",
+    version="0.9.0",
     license="BSD",
     description="A microframework to build source -> filter -> action workflows.",
     long_description=remove_rst_roles(expand_includes(read('README.rst'))),
@@ -72,9 +72,6 @@ setup(
     install_requires=[
         'hy',
         'twiggy-goodies>=0.7.0',
-    ],
-    dependency_links=[
-        'git+git://github.com/hylang/hy.git@a3bd90390cb37b46ae33ce3a73ee84a0feacce7d#egg=hy',
     ],
     extras_require={
         'sources.imap': ['IMAPClient'],

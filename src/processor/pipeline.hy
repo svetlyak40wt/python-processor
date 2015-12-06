@@ -22,8 +22,8 @@
 ;;          (del (get sources idx)))
        
 ;;        (else
-;;         (lisp-if value
-;;                  (yield value))
+;;         (lif value
+;;              (yield value))
 ;;         (setv idx (+ idx 1))))
 
 ;;       (if (>= idx (len sources))
@@ -96,13 +96,13 @@ calling it until it return None and yielding returned values"
         (for [item msg]
           (setv response (step item))
           ;; if not None was returned, then process further
-          (lisp-if response
-                   (do
-                    (setv response (if (or (isinstance response dict)
-                                           (not (isinstance response Iterable)))
-                                     [response]
-                                     response))
-                    (run_pipeline response (list (rest pipeline)))))))))
+          (lif response
+               (do
+                (setv response (if (or (isinstance response dict)
+                                       (not (isinstance response Iterable)))
+                                 [response]
+                                 response))
+                (run_pipeline response (list (rest pipeline)))))))))
   
   (for [callback _on-close-callbacks]
     (apply callback)))

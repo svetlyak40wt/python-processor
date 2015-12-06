@@ -12,10 +12,10 @@
       
       (for [output pipeline]
         (setv msg (output msg))
-        (lisp-if-not msg
-                     (break)))
+        (lif-not msg
+                 (break)))
 
       ;; at the end of each pipeline
       ;; we yield result if any
-      (lisp-if msg
-               (yield msg)))))
+      (lif msg
+           (yield msg)))))
