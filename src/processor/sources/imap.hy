@@ -55,10 +55,12 @@
 
 (defn imap [hostname username password folder &optional [limit 10]]
   (import-or-error [imapclient [IMAPClient]]
-                   "Please, install 'imapclient' library to use 'imap' source.")
+                   "Please, install 'imapclient==1.0.0' library to use 'imap' source.")
 
   (setv server (apply IMAPClient [hostname] {"use_uid" True
-                                                     "ssl" True}))
+                                             "ssl" True
+                                             "timeout" 10}))
+  
   (setv [get-value set-value] (get-storage "imap-source"))
   (setv seen-position-key (.join ":" [server.host folder "position"]))
   (setv seen-position (get-value seen-position-key -1))
@@ -76,7 +78,7 @@
           (if (> seen-position 0)
             ;; if this is not a first time when we are fetching data
             ;; then just fetch every new message
-            (.format "UID {0}:*" (+ seen-position 1))
+            ["UID" (.format "{0}:*" (+ seen-position 1))]
             ;; if wer are fetching for the first time, then we have
             ;; to limit message by date because when there is big amount
             ;; of data, then imaplib unable to download that many data at once
@@ -93,7 +95,8 @@
              (.format "NOT DELETED SINCE {0}" since))))
 
     ;; docs for the SEARCH command http://tools.ietf.org/html/rfc3501#section-6.4.4
-    (setv message-ids (.search server [search-criterion]))
+    (log.info (.format "Searching with search-criterion={0}" search-criterion))
+    (setv message-ids (server.search search-criterion))
     
     (if (> seen-position 0)
       ;; if already processed this folder in past, then output only unprocessed

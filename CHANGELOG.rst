@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.10.0 (2016-01-04)
+-------------------
+
+* IMAP source was fixed to work with new IMAPClient's API and
+support ``IMAPClient > 1.0.0``.
+
+
 0.9.0 (2015-12-06)
 ------------------
 
