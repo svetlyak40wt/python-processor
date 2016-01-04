@@ -6,7 +6,9 @@ Changelog
 
 * IMAP source was fixed to work with new IMAPClient's API and
 support ``IMAPClient > 1.0.0``.
-
+* Datastorage was fixed to get ``filename`` from ``PROCESSOR_DB``
+  environment variable in case if it was setup using
+  ``os.environ['PROCESSOR_DB'] = 'some.db'`` after the imports.
 
 0.9.0 (2015-12-06)
 ------------------

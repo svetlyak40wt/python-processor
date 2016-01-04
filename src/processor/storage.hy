@@ -1,15 +1,20 @@
 (import os)
 (import pickle)
 (import json)
-
+(require processor.utils.macro)
 
 (setv not-given (object))
 
 
-(defn get-storage [plugin-name &optional [db-filename (.get
-                                                       os.environ
-                                                       "PROCESSOR_DB"
-                                                       "processor.db")]]
+(defn get-storage [plugin-name &optional [db-filename not-given]]
+
+  (setv db-filename (if (is not-given db-filename)
+                      (os.environ.get "PROCESSOR_DB" "processor.db")
+                      db-filename))
+  
+  (with-log-fields {"db_filename" db-filename}
+    (log.info "Will use this file to store data"))
+  
   (defn get-plugin-data []
     (setv data (if (os.path.exists db-filename)
                  (with [f (open db-filename "r")]
