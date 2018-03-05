@@ -36,15 +36,15 @@ Badges
     :alt: PyPI Package monthly downloads
     :target: https://pypi.python.org/pypi/processor
 
-.. |wheel| image:: https://pypip.in/wheel/processor/badge.png?style=flat
+.. |wheel| image:: https://img.shields.io/pypi/wheel/processor.svg?style=flat
     :alt: PyPI Wheel
     :target: https://pypi.python.org/pypi/processor
 
-.. |supported-versions| image:: https://pypip.in/py_versions/processor/badge.png?style=flat
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/processor.svg?style=flat
     :alt: Supported versions
     :target: https://pypi.python.org/pypi/processor
 
-.. |supported-implementations| image:: https://pypip.in/implementation/processor/badge.png?style=flat
+.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/processor.svg?style=flat
     :alt: Supported imlementations
     :target: https://pypi.python.org/pypi/processor
 
